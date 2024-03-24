@@ -1,0 +1,31 @@
+### POST Method
+POST http://localhost:4004/odata/v4/student-total-info/OutputData
+Content-Type: application/json
+
+{
+    "NAME":"dog", 
+    "AGE": 32,
+    "BRANCH":"CYber",
+    "TOTAL_SUB": 6,
+    "M1_M":20,
+    "PYTHON_M":25,
+    "CS_M":30,
+    "MACHINES_M":30,
+    "DRAWING_M":35,
+    "EHV_M":45
+}
+
+### UPDATE Method
+PUT http://localhost:4004/odata/v4/student-total-info/OutputData('2004ddc000b-acf4-4171-8b6b-89e978145c80')
+Content-Type: application/json
+
+{
+   
+    "NAME":"lion"
+}
+
+### GET Method
+GET http://localhost:4004/odata/v4/student-total-info/OutputData
+
+### DELETE Method
+DELETE http://localhost:4004/odata/v4/student-total-info/OutputData/200[object Object]

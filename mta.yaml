@@ -1,0 +1,43 @@
+_schema-version: '3.1'
+ID: btp_stinfo
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx cds build --production
+modules:
+  - name: btp_stinfo-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+      - name: xsuaa # specify the authentication method
+        properties:
+          kind: xsuaa
+    requires:
+      - name: btp_stinfo-db
+
+  - name: btp_stinfo-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: btp_stinfo-db
+
+resources:
+  - name: btp_stinfo-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
